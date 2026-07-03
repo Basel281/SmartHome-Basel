@@ -19,6 +19,8 @@ void loop() {
 
   mqttLoop();
 
+  updateLEDs();
+
   readSensors();
 
   delay(100);

@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "author": "SmartHome-Basel",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": -260, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -140, "left": 140, "attrs": {} },
+    { "type": "wokwi-pir-motion-sensor", "id": "pir1", "top": 0, "left": 260, "attrs": {} },
+    { "type": "wokwi-pushbutton", "id": "btn1", "top": -140, "left": -60, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led1", "top": 140, "left": 60, "attrs": { "color": "red" } },
+    { "type": "wokwi-led", "id": "led2", "top": 140, "left": 140, "attrs": { "color": "green" } },
+    { "type": "wokwi-led", "id": "led3", "top": 140, "left": 220, "attrs": { "color": "blue" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": 190, "left": 55, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": 190, "left": 135, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r3", "top": 190, "left": 215, "attrs": { "value": "220" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+
+    [ "esp:D25", "r1:1", "green", [ "h0" ] ],
+    [ "r1:2", "led1:A", "green", [ "v0" ] ],
+    [ "led1:C", "esp:GND.1", "black", [ "v0", "h-152.6" ] ],
+
+    [ "esp:D26", "r2:1", "green", [ "h0" ] ],
+    [ "r2:2", "led2:A", "green", [ "v0" ] ],
+    [ "led2:C", "esp:GND.1", "black", [ "v0", "h-232.6" ] ],
+
+    [ "esp:D27", "r3:1", "green", [ "h0" ] ],
+    [ "r3:2", "led3:A", "green", [ "v0" ] ],
+    [ "led3:C", "esp:GND.1", "black", [ "v0", "h-312.6" ] ],
+
+    [ "esp:D14", "pir1:OUT", "green", [ "h0" ] ],
+    [ "pir1:VCC", "esp:5V", "red", [ "v-20", "h-400" ] ],
+    [ "pir1:GND", "esp:GND.2", "black", [ "v-40", "h-420" ] ],
+
+    [ "esp:D15", "dht1:SDA", "green", [ "h0" ] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "v-20", "h-280" ] ],
+    [ "dht1:GND", "esp:GND.1", "black", [ "v-40", "h-300" ] ],
+
+    [ "esp:D4", "btn1:1.l", "green", [ "h0" ] ],
+    [ "btn1:2.l", "esp:GND.3", "black", [ "v20", "h-40" ] ]
+  ]
+}

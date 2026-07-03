@@ -4,10 +4,23 @@
 
 #include "mqtt.h"
 #include "config.h"
+#include "leds.h"
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 void setupMQTT() {
+
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    Serial.print("Connecting to WiFi");
+
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    Serial.println();
+    Serial.print("WiFi connected, IP address: ");
+    Serial.println(WiFi.localIP());
 
     client.setServer(MQTT_SERVER, 1883);
     client.setCallback(mqttCallback);
@@ -28,7 +41,7 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   Serial.println(message);
 
   if (String(topic) == LED1_TOPIC) {
-    digitalWrite(LED1, message == "ON");
+    setLED1(message == "ON");
   }
 
   if (String(topic) == LED2_TOPIC) {

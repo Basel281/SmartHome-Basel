@@ -3,6 +3,7 @@
 
 #include "sensors.h"
 #include "config.h"
+#include "mqtt.h"
 
 DHT dht(DHTPIN, DHT22);
 
@@ -27,6 +28,9 @@ void readSensors() {
 
         Serial.print("Humidity: ");
         Serial.println(h);
+
+        client.publish(TEMP_TOPIC, String(t).c_str());
+        client.publish(HUM_TOPIC, String(h).c_str());
     }
 
     bool currentMotion = digitalRead(PIR);
@@ -38,10 +42,12 @@ void readSensors() {
         if (currentMotion == HIGH) {
 
             Serial.println("Motion Detected");
+            client.publish(MOTION_TOPIC, "1");
 
         } else {
 
             Serial.println("No Motion");
+            client.publish(MOTION_TOPIC, "0");
         }
     }
 }
